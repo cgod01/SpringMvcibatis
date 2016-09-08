@@ -1,0 +1,95 @@
+/*
+Uploadify
+Copyright (c) 2012 Reactive Apps, Ronnie Garcia
+Released under the MIT License <http://www.opensource.org/licenses/mit-license.php> 
+*/
+
+.uploadify {
+	position: relative;
+	margin: 2px 0 4px 0;
+}
+.uploadify-queue{
+	background-color: #eee;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+    max-width: 400px;
+}
+.uploadify object{
+}
+.uploadify-button {
+	background-color: #505050;
+	-webkit-border-radius: 20px;
+	-moz-border-radius: 20px;
+	border-radius: 20px;
+	border: 2px solid #808080;
+	color: #FFF;
+	font: bold 12px Arial, Helvetica, sans-serif;
+	text-align: center;
+	text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
+	width: 100%;
+	cursor: default;
+}
+.uploadify:hover .uploadify-button {
+	background-color: #606060;
+	background-position: center bottom;
+}
+.uploadify-button.disabled {
+	background-color: #D0D0D0;
+	color: #808080;
+}
+.uploadify-queue-item {
+	font: 12px Verdana, Geneva, sans-serif;
+	line-height:14px;
+	padding: 5px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	background-color: #ddd;
+	margin:5px;
+}
+.uploadify-error {
+	background-color: #FDE5DD !important;
+}
+.uploadify-queue-item .data{
+	color:#8a8a8a;
+	font-size:11px;
+}
+.uploadify-queue-item .cancel a {
+	background: url('images/cancel.png') no-repeat center center;
+	float: right;
+	height:	16px;
+	text-indent: -9999px;
+	width: 16px;
+}
+.uploadify-queue-item .cancel a:hover{
+	background: url('images/cancel_hover.png') no-repeat center center;
+}
+.uploadify-queue-item.completed {
+	background-color: #E5E5E5;
+}
+.uploadify-progress {
+	background-color: #f5f5f5;
+	margin-top: 5px;
+	width: 100%;
+}
+.uploadify-progress-bar {
+	background-color: #0099FF;
+	height: 3px;
+	width: 1px;
+}
+
+.list-horizontal{
+	max-width:none;
+	overflow: hidden;
+	
+}
+.list-horizontal .uploadify-queue-item{
+	float:left;
+	white-space: nowrap;
+	padding-right:20px;
+	margin-right:10px;
+}
+.list-horizontal .uploadify-queue-item .cancel a{
+	margin-right:-17px;
+}

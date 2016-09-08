@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="SpringMvcibatis"
+  id="myeclipse.1473076244386"
+  context-root="/SpringMvcibatis"
+  j2ee-spec="6.0"
+  archive="SpringMvcibatis.war">
+  <attributes>
+    <attribute name="webrootdir" value="WebRoot" />
+  </attributes>
+</project-module>
+
