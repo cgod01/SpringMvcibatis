@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE sqlMapConfig PUBLIC "-//iBATIS.com//DTD SQL Map Config 2.0//EN" "http://www.ibatis.com/dtd/sql-map-config-2.dtd">
+
+<sqlMapConfig> 
+	<settings cacheModelsEnabled="true" enhancementEnabled="true"
+		lazyLoadingEnabled="true" useStatementNamespaces="true" />
+		<sqlMap resource="ibatisConfig.xml" />
+		<sqlMap resource="cgod/mapping/MyXml.xml"/>
+</sqlMapConfig>
+
