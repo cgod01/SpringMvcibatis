@@ -10,9 +10,9 @@ public class MD5Utils {
 		try {
 			byte[] strTrmp = ss.getBytes();
 			MessageDigest mdTemp = MessageDigest.getInstance("MD5");
-			//累计文摘更新
+			//绱鏂囨憳鏇存柊
 			mdTemp.update(strTrmp);
-			//完成算法返回加密信息
+			//瀹屾垚绠楁硶杩斿洖鍔犲瘑淇℃伅
 			byte[] md = mdTemp.digest();
 			int len = md.length;
 			char str[] = new char[len*2];

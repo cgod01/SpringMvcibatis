@@ -7,7 +7,7 @@
 	<div class="container-fluid full-height">
 		<div class="ibox">
 			<div class="ibox-form">
-				<div class="form-horizontal" onsubmit = "return false">
+				<form class="form-horizontal" onsubmit = "return false">
 					<div class="row">
 						<div class="col-xs-4 col-lg-3">
 							<div class="form-group">
@@ -29,7 +29,7 @@
 							<button type="button" class="btn btn-primary" id="queryBtn">查询</button>
 						</div>
 					</div>
-				</div>
+				</form>
 			</div>
 			<div class="ibox-content">
 				<div class="table-domain" id="table">

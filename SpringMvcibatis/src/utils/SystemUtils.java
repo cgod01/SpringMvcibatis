@@ -7,6 +7,7 @@ import java.util.Properties;
 public class SystemUtils {
 	private static final String PROP_FILE = "/system.properties"; 	//系统配置文件路径
 	private static String staticPath = "";
+	private static String uploadPath="";
 	
 	static {
 		Properties prop = new Properties();
@@ -18,6 +19,7 @@ public class SystemUtils {
 			e.printStackTrace();
 		}
 		staticPath = prop.getProperty("static_path")+"/SpringMvcibatis";
+		uploadPath = prop.getProperty("upload_path");
 	}
 
 	public static String getStaticPath() {
@@ -27,6 +29,13 @@ public class SystemUtils {
 	public static void setStaticPath(String staticPath) {
 		SystemUtils.staticPath = staticPath;
 	}
-	
+
+	public static String getUploadPath() {
+		return uploadPath;
+	}
+
+	public static void setUploadPath(String uploadPath) {
+		SystemUtils.uploadPath = uploadPath;
+	}
 	
 }
