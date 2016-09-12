@@ -1,12 +1,14 @@
 package cgod.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -204,7 +206,57 @@ public class MyController {
 	
 	@RequestMapping("/downloadFile")
 	@ResponseBody
-	public void downloadFile(){
-//		String downloadfilePath = "E:\\myupload\";
+	public void downloadFile(HttpServletResponse response,String filename){
+//		boolean flag = false;
+		try {
+			System.out.println(filename);
+			String downloadPath = SystemUtils.getUploadPath();
+			File downloadFile = new File(downloadPath,filename);
+			System.out.println(downloadFile.exists());
+			if(!downloadFile.exists()){
+//				downloadFile.createNewFile();
+//				flag = true;
+				response.setContentType("text/html");
+				response.setCharacterEncoding("UTF-8");
+				response.getWriter().write("<script>parent.callback('文件不存在!')</script>");
+			} else {
+				InputStream in = new FileInputStream(downloadFile);
+				
+				//设置字符编码的三种方式 权限依次减弱 
+//				第一种方法只能用来设置out输出流中所采用的编码，但是它的优先权最高，可以覆盖后面两种方法中的设置；
+//			      第二中方法可以设置out输出流中字符的编码方式，也可以设置浏览器接收到这些字符后以什么编码方式来解码，它的优先权低于第一种方法，  但高于第三种方法；
+//			      第三种方法只能用来设置out输出流中字符的编码方式，但是它的优先权最低，在已经使用前两种方法中的一个设置了编码方式以后，它就被覆盖而不起作用了
+				response.setCharacterEncoding("UTF-8");
+//				response.setContentType("text/html;charset=UTF-8");
+//				response.setLocale(new Locale("zh","CN"));
+				
+				//使客户端浏览器，区分不同种类的数据，并根据不同的MIME调用浏览器内不同的程序嵌入模块来处理相应的数据
+				response.setContentType("multipart/form-data");
+				//当Content-Type 的类型为要下载的类型时 , 这个信息头会告诉浏览器这个文件的名字和类型。
+				response.setHeader("Content-Disposition", "attachment;filename="+new String(filename.getBytes(),"ISO8859-1"));
+				
+				//设置服务器向用户返回的数据长度
+				response.setContentLength(in.available());
+				//这个是向客户机添加一个时间值属性的响应头信息，比如那个缓存的响应头expires,防止数据被保存到浏览器缓存
+//				response.setHeader("Cache-Control","no store");//HTTP 1.1
+//				response.setHeader("Pragma","no store");//HTTP 1.0
+//				response.setDateHeader("Expires",0);//在代理服务器端防止缓冲
+				
+				OutputStream out = response.getOutputStream();
+				byte[] buffer = new byte[1024];
+				int len = 0;
+				while((len = in.read(buffer)) != -1) {
+					out.write(buffer, 0, len);
+				}
+				out.close();
+				out.flush();
+				in.close();
+//				if(flag){
+//					downloadFile.delete();
+//				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

@@ -19,18 +19,18 @@ AJAX.ajax = function(url, data, type, callback) {
 		dataType : 'json',
 		error : function(data, transport) {
 			if(data.status==518){
-				alert("ÏµÍ³³¬Ê±, ÇëÖØĞÂµÇÂ¼.");
+				alert("ç³»ç»Ÿè¶…æ—¶, è¯·é‡æ–°ç™»å½•.");
 			}else{
 				//showErrorMsg(data.responseText)
-				toastr.error('Êı¾İÒì³£,ÇëÁªÏµÔËÎ¬ÈËÔ±.');
+				toastr.error('æ•°æ®å¼‚å¸¸,è¯·è”ç³»è¿ç»´äººå‘˜.');
 			}
 		},
 		success : function(obj) {
 			var data = obj.data;
 			if(data===true){
-				toastr.success('²Ù×÷³É¹¦');
+				toastr.success('æ“ä½œæˆåŠŸ');
 			}else if(data===false){
-				toastr.error('²Ù×÷Ê§°Ü!');
+				toastr.error('æ“ä½œå¤±è´¥!');
 			}
 			if(!_async){
 				_result = data;
@@ -47,20 +47,20 @@ AJAX.ajax = function(url, data, type, callback) {
 }
 
 /**
- * ²é¿´
+ * æŸ¥çœ‹
  */
 AJAX.GET = function(url, data, callback) {
 	return this.ajax(url, data, 'GET', callback);
 }
 
 /**
- * ´´½¨
+ * åˆ›å»º
  */
 AJAX.POST = function(url, data, callback) {
 	return this.ajax(url, data, 'POST', callback);
 }
 /**
- * ÅúÁ¿Ìá½»
+ * æ‰¹é‡æäº¤
  */
 AJAX.BATCH = function(url, data, callback){
 	$.ajax({
@@ -72,7 +72,7 @@ AJAX.BATCH = function(url, data, callback){
 		dataType : 'json',
 		error : function(data, transport) {
 			//showErrorMsg(data.responseText)
-			toastr.error('Êı¾İÒì³£,ÇëÁªÏµÔËÎ¬ÈËÔ±.');
+			toastr.error('æ•°æ®å¼‚å¸¸,è¯·è”ç³»è¿ç»´äººå‘˜.');
 		},
 		success : function(obj) {
 			var msg = obj.data;
@@ -84,7 +84,7 @@ AJAX.BATCH = function(url, data, callback){
 }
 
 /**
- * ·µ»Ø×Ö·û´®
+ * è¿”å›å­—ç¬¦ä¸²
  */
 AJAX.getString = function(url, data){
 	var result;
@@ -97,7 +97,7 @@ AJAX.getString = function(url, data){
 		cache :false,
 		error : function(data, transport) {
 			if(data.status==518){
-				alert("ÏµÍ³³¬Ê±, ÇëÖØĞÂµÇÂ¼.");
+				alert("ç³»ç»Ÿè¶…æ—¶, è¯·é‡æ–°ç™»å½•.");
 			}else{
 				swal({
 					title:"",
@@ -116,9 +116,9 @@ AJAX.getString = function(url, data){
 }
 
 /**
- * ÏÔÊ¾´íÎóĞÅÏ¢
- * ÕÚÕÖ²ã
- * @param msg ´íÎóĞÅÏ¢
+ * æ˜¾ç¤ºé”™è¯¯ä¿¡æ¯
+ * é®ç½©å±‚
+ * @param msg é”™è¯¯ä¿¡æ¯
  */
 function showErrorMsg(msg){
 	if(msg){

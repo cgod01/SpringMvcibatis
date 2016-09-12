@@ -16,6 +16,7 @@ public class MyModal {
 	private String tam_uid;
 	private String dldm;
 	private String dlkl;
+	private String filename;
 	
 	public String getName() {
 		return name;
@@ -74,6 +75,12 @@ public class MyModal {
 	}
 	public void setDlkl(String dlkl) {
 		this.dlkl = dlkl;
+	}
+	public String getFilename() {
+		return filename;
+	}
+	public void setFilename(String filename) {
+		this.filename = filename;
 	}
 	
 }
