@@ -8,7 +8,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
-import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,6 +19,7 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +30,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import utils.SystemUtils;
-
 import cgod.modal.MyModal;
 import cgod.service.MyService;
 
@@ -256,6 +255,32 @@ public class MyController {
 //				}
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@RequestMapping("/export")
+	@ResponseBody
+	public void POIExport(HttpServletResponse response){
+		List<MyModal> list = this.myservice.queryLogin(new MyModal());
+		String[] attrNames = new String[]{"rybh","rymc","yhjb","sjbmbh","tam_uid"};
+		String[] header = new String[]{"人员编号","人员名称","用户级别","上级部门编号","门户信息"};
+		HSSFWorkbook work = this.myservice.POIExport(list,header,attrNames);
+		String title = "cgod导出.xlsx";
+		response.setContentType("application/msexcel");
+		try {
+			response.setHeader("Content-disposition", "attachment;filename="+new String(title.getBytes(),"iso8859-1"));
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		OutputStream out;
+		try {
+			out = response.getOutputStream();
+			work.write(out);
+			out.flush();
+			out.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
