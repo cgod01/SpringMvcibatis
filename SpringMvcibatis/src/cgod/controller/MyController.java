@@ -19,6 +19,9 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
@@ -262,13 +265,17 @@ public class MyController {
 	@RequestMapping("/export")
 	@ResponseBody
 	public void POIExport(HttpServletResponse response){
-		List<MyModal> list = this.myservice.queryLogin(new MyModal());
+		MyModal mm = new MyModal();
+		mm.setName("admin");
+		List<MyModal> list = this.myservice.queryLogin(mm);
 		String[] attrNames = new String[]{"rybh","rymc","yhjb","sjbmbh","tam_uid"};
 		String[] header = new String[]{"人员编号","人员名称","用户级别","上级部门编号","门户信息"};
 		HSSFWorkbook work = this.myservice.POIExport(list,header,attrNames);
-		String title = "cgod导出.xlsx";
+		String title = "cgod导出.xls";
 		response.setContentType("application/msexcel");
 		try {
+			//http header头要求其内容必须为iso8859-1编码,但是前面为什么不直接使用 "中文文件名".getBytes("ISO8859-1");
+			//这样的代码呢？因为ISO8859-1编码的编码表中，根本就没有包含汉字字符;
 			response.setHeader("Content-disposition", "attachment;filename="+new String(title.getBytes(),"iso8859-1"));
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
@@ -281,6 +288,49 @@ public class MyController {
 			out.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	@RequestMapping("/import")
+	@ResponseBody
+	public void POIimport(@RequestParam("fileimport") MultipartFile file){
+		try {
+			InputStream in = file.getInputStream();
+			System.out.println(file.getOriginalFilename());
+//			HSSFWorkbook对应的xls，XSSFWorkbook对应的xlsx
+			HSSFWorkbook work = new HSSFWorkbook(in);
+			int sheet_len = work.getNumberOfSheets();
+			for (int i = 0; i < sheet_len; i++) {
+				HSSFSheet sheet = work.getSheetAt(i);
+				int row_len = sheet.getLastRowNum();
+				System.out.println(row_len);
+				if(row_len >= 0) {
+					int cell_len = sheet.getRow(0).getLastCellNum();
+					System.out.println(cell_len);
+					for (int j = 0; j <= row_len; j++) {
+						HSSFRow row = sheet.getRow(j);
+						for (int k = 0; k < cell_len; k++) {
+							HSSFCell cell = row.getCell(k);
+							if(cell.getCellType() == 0){
+								System.out.print(cell.getNumericCellValue()+".");
+							} else if(cell.getCellType() == 1){
+								System.out.print(cell.getStringCellValue()+".");
+							} else if(cell.getCellType() == 2) {
+								System.out.print(cell.getStringCellValue()+".");
+							} else if(cell.getCellType() == 3) {
+								System.out.print(cell.getStringCellValue()+".");
+							} else if(cell.getCellType() == 4) {
+								System.out.print(cell.getBooleanCellValue()+".");
+							} else {
+								System.out.print(cell.getErrorCellValue()+".");
+							}
+						}
+						System.out.println("");
+					}
+				}
+			}
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
